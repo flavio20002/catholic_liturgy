@@ -3,14 +3,17 @@ import 'package:catholic_liturgy/src/_date_utilities.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
-main() async {
+Future<void> main() async {
   var df = DateFormat('dd/MM/yyyy');
 
   parse(String dateString) => df.parseUTC(dateString);
 
   group('Home lectures card Test', () {
     void checkFormatDate(
-        String date, LiturgyLanguage language, String expected) {
+      String date,
+      LiturgyLanguage language,
+      String expected,
+    ) {
       test('$date in language $language should be formatted as $expected', () {
         initializeLanguage(language);
         String formattedDate = DateUtilities.formatDate(parse(date), language);
@@ -19,15 +22,20 @@ main() async {
     }
 
     checkFormatDate(
-        '31/05/2020', LiturgyLanguage.it, 'Domenica, 31 maggio 2020');
+      '31/05/2020',
+      LiturgyLanguage.it,
+      'Domenica, 31 maggio 2020',
+    );
     checkFormatDate('31/05/2020', LiturgyLanguage.en, 'Sunday, 31 May 2020');
 
     void checkFormatCurrentDate(LiturgyLanguage language) {
       test('Check Format current date in language $language', () {
         initializeLanguage(language);
         String formattedDate = DateUtilities.formatCurrentDate(language);
-        expect(formattedDate,
-            DateUtilities.formatDate(DateUtilities.currentDate(), language));
+        expect(
+          formattedDate,
+          DateUtilities.formatDate(DateUtilities.currentDate(), language),
+        );
       });
     }
 
@@ -59,8 +67,9 @@ main() async {
 
     void checkPreviousSunday(String dateString, String expected) {
       test('Previous Sunday of $dateString should be $expected', () {
-        DateTime previousSunday =
-            DateUtilities.previousSunday(parse(dateString));
+        DateTime previousSunday = DateUtilities.previousSunday(
+          parse(dateString),
+        );
         String previousSundayString = df.format(previousSunday);
         expect(previousSundayString, expected);
       });
@@ -117,8 +126,9 @@ main() async {
     void checkAddWeeks(String dateString, int weeks, String expected) {
       test('Adding $weeks weeks to $dateString to obtain $expected', () {
         expect(
-            df.format(DateUtilities.addWeeksToDate(parse(dateString), weeks)),
-            expected);
+          df.format(DateUtilities.addWeeksToDate(parse(dateString), weeks)),
+          expected,
+        );
       });
     }
 
@@ -131,8 +141,10 @@ main() async {
 
     void checkAddDays(String dateString, int days, String expected) {
       test('Adding $days days to $dateString to obtain $expected', () {
-        expect(df.format(DateUtilities.addDaysToDate(parse(dateString), days)),
-            expected);
+        expect(
+          df.format(DateUtilities.addDaysToDate(parse(dateString), days)),
+          expected,
+        );
       });
     }
 
@@ -144,14 +156,22 @@ main() async {
     checkAddDays('12/04/2020', -42, '01/03/2020');
 
     void checkDaysBetween(
-        String dateString1, String dateString2, int expected) {
-      test('Check days between $dateString1 and $dateString2 to be $expected',
-          () {
-        expect(
+      String dateString1,
+      String dateString2,
+      int expected,
+    ) {
+      test(
+        'Check days between $dateString1 and $dateString2 to be $expected',
+        () {
+          expect(
             DateUtilities.daysBetweenDates(
-                parse(dateString1), parse(dateString2)),
-            expected);
-      });
+              parse(dateString1),
+              parse(dateString2),
+            ),
+            expected,
+          );
+        },
+      );
     }
 
     checkDaysBetween('01/06/2020', '01/06/2020', 0);
@@ -161,29 +181,44 @@ main() async {
     checkDaysBetween('01/06/2020', '29/05/2020', -3);
 
     void checkDaysBetweenCurrentDate(String dateString, int expected) {
-      test('Check days between current Date and $dateString to be $expected',
-          () {
-        expect(
-            DateUtilities.daysBetweenCurrentDate(parse(dateString)), expected);
-      });
+      test(
+        'Check days between current Date and $dateString to be $expected',
+        () {
+          expect(
+            DateUtilities.daysBetweenCurrentDate(parse(dateString)),
+            expected,
+          );
+        },
+      );
     }
 
     checkDaysBetweenCurrentDate(df.format(DateUtilities.currentDate()), 0);
     checkDaysBetweenCurrentDate(
-        df.format(DateUtilities.currentDate().add(const Duration(days: 1))), 1);
+      df.format(DateUtilities.currentDate().add(const Duration(days: 1))),
+      1,
+    );
     checkDaysBetweenCurrentDate(
-        df.format(DateUtilities.currentDate().add(const Duration(days: -1))),
-        -1);
+      df.format(DateUtilities.currentDate().add(const Duration(days: -1))),
+      -1,
+    );
 
     void checkWeeksBetween(
-        String dateString1, String dateString2, int expected) {
-      test('Check weeks between $dateString1 and $dateString2 to be $expected',
-          () {
-        expect(
+      String dateString1,
+      String dateString2,
+      int expected,
+    ) {
+      test(
+        'Check weeks between $dateString1 and $dateString2 to be $expected',
+        () {
+          expect(
             DateUtilities.weeksBetweenDates(
-                parse(dateString1), parse(dateString2)),
-            expected);
-      });
+              parse(dateString1),
+              parse(dateString2),
+            ),
+            expected,
+          );
+        },
+      );
     }
 
     checkWeeksBetween('01/06/2020', '01/06/2020', 0);

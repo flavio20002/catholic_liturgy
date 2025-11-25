@@ -1,4 +1,4 @@
-library catholic_liturgy;
+library;
 
 export 'src/liturgy.dart';
 export 'src/model.dart';

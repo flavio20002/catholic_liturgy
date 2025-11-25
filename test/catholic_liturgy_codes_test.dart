@@ -6,7 +6,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
 
-main() async {
+Future<void> main() async {
   var df = DateFormat('dd/MM/yyyy');
 
   parse(String dateString) => df.parseUTC(dateString);
@@ -43,11 +43,16 @@ main() async {
     testData = await File("../$filePath").readAsString();
   }
 
-  List<List<dynamic>> testDataRows =
-      const CsvToListConverter().convert(testData, eol: '\n');
+  List<List<dynamic>> testDataRows = const CsvToListConverter().convert(
+    testData,
+    eol: '\n',
+  );
 
   void checkLiturgy(
-      String date, bool isEpiphanyOn6thJan, LiturgyModel? expected) {
+    String date,
+    bool isEpiphanyOn6thJan,
+    LiturgyModel? expected,
+  ) {
     final actual = liturgy(parse(date), isEpiphanyOn6thJan);
     test('Liturgy of $date ($isEpiphanyOn6thJan) should be $expected', () {
       expect(actual, expected);
@@ -55,7 +60,10 @@ main() async {
   }
 
   void checkLiturgyDescription(
-      LiturgyModel liturgyModel, LiturgyLanguage language, String expected) {
+    LiturgyModel liturgyModel,
+    LiturgyLanguage language,
+    String expected,
+  ) {
     final actual = liturgyDescription(liturgyModel, language);
     test('Liturgy of ${liturgyModel.toString()} should be $expected', () {
       expect(actual, expected);
@@ -66,10 +74,11 @@ main() async {
     initializeLanguage(LiturgyLanguage.it);
     for (final row in testDataRows) {
       LiturgyModel? expected = LiturgyModel(
-          category: EnumToString.fromString(LiturgyEnum.values, row[2])!,
-          number: row[3] == 'null' ? null : row[3],
-          dayOfWeek: row[4] == 'null' ? null : row[4],
-          isFeast: row[5] == 'true');
+        category: EnumToString.fromString(LiturgyEnum.values, row[2])!,
+        number: row[3] == 'null' ? null : row[3],
+        dayOfWeek: row[4] == 'null' ? null : row[4],
+        isFeast: row[5] == 'true',
+      );
       if (row[1] == '*') {
         checkLiturgy(row[0], true, expected);
         checkLiturgy(row[0], false, expected);
@@ -80,9 +89,15 @@ main() async {
         String? descriptionExpectedIT = row[6];
         String? descriptionExpectedEN = row[7];
         checkLiturgyDescription(
-            expected, LiturgyLanguage.it, descriptionExpectedIT!);
+          expected,
+          LiturgyLanguage.it,
+          descriptionExpectedIT!,
+        );
         checkLiturgyDescription(
-            expected, LiturgyLanguage.en, descriptionExpectedEN!);
+          expected,
+          LiturgyLanguage.en,
+          descriptionExpectedEN!,
+        );
       }
     }
   });
