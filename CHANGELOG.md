@@ -59,3 +59,6 @@
 
 ## 0.0.18
 * Upgrade version
+
+## 0.0.19
+* Fix saints
