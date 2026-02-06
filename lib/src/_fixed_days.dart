@@ -100,6 +100,8 @@ Map<String, FranciscanFeastMemoryEnum> franciscanFeastMemoryFixed = {
       .sanLudovicoIXRePatronoDelOrdineFrancescanoSecolare,
   '17/11': FranciscanFeastMemoryEnum
       .santaElisabettaDUngheriaPatronaDellOrdineFrancescanoSecolare,
+  '13/06':
+      FranciscanFeastMemoryEnum.sAntonioDiPadovaPresbiteroEDottoreDellaChiesa,
 };
 
 Map<String, SaintMemoryEnum> saintsMemoryFixed = {
