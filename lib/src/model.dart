@@ -42,7 +42,6 @@ enum LiturgyEnum {
   theDedicationOfTheLateranBasilica,
   theTransfigurationOfTheLord,
   allSaints,
-  thePresentationOfTheBlessedVirginMary,
   thePassionOfSaintJohnTheBaptist,
   theCommemorationOfAllTheFaithfulDeparted,
   theChairOfSaintPeterTheApostle,
@@ -57,7 +56,6 @@ enum LiturgyEnum {
   saintMarkEvangelist,
   saintCatherineOfSiena,
   saintJosephTheWorker,
-  saintAthanasius,
   saintsPhilipAndJamesApostles,
   saintThomasApostle,
   saintFrancisOfAssisi,
@@ -80,7 +78,7 @@ enum LiturgyEnum {
   saintsTimothyAndTitusBishops,
   saintJohnApostleAndEvangelist,
   saintsMichaelGabrielAndRaphaelArchangels,
-  memorialOfTheBlessedVirginMaryMotherOfTheChurch
+  memorialOfTheBlessedVirginMaryMotherOfTheChurch,
 }
 
 enum SaintMemoryEnum {
@@ -181,7 +179,7 @@ enum FranciscanFeastMemoryEnum {
   sanLorenzoDaBrindisiPresbiteroEDottoreDellaChiesa,
   sanLudovicoIXRePatronoDelOrdineFrancescanoSecolare,
   santaElisabettaDUngheriaPatronaDellOrdineFrancescanoSecolare,
-  sAntonioDiPadovaPresbiteroEDottoreDellaChiesa
+  sAntonioDiPadovaPresbiteroEDottoreDellaChiesa,
 }
 
 enum LiturgyLanguage { it, en }
@@ -191,11 +189,12 @@ class LiturgyModel {
   final int? number;
   final int? dayOfWeek;
   final bool isFeast;
-  LiturgyModel(
-      {required this.category,
-      this.number,
-      this.dayOfWeek,
-      required this.isFeast});
+  LiturgyModel({
+    required this.category,
+    this.number,
+    this.dayOfWeek,
+    required this.isFeast,
+  });
 
   @override
   bool operator ==(other) =>
@@ -222,7 +221,7 @@ class LiturgyModel {
       'category': category.toString(),
       'number': number,
       'dayOfWeek': dayOfWeek,
-      'isFeast': isFeast
+      'isFeast': isFeast,
     };
   }
 }
